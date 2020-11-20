@@ -1,3 +1,33 @@
+//OPTIMAL SOLUTION
+
+class Solution {
+public:
+    int height(TreeNode* p){
+        if(p == NULL) return 0;
+        return 1+max(height(p->left),height(p->right));
+    }
+    
+    void dfs(TreeNode* p,vector<int> &ans,int n){
+        if(p == NULL) return;
+        ans[n-1]=max(ans[n-1],p->val);
+        dfs(p->left,ans,n+1);
+        dfs(p->right,ans,n+1);
+        return;
+    }
+    
+    vector<int> largestValues(TreeNode* root) {
+        int d=height(root);
+        if(root == NULL) return {};
+        vector<int> ans(d,INT_MIN);
+        dfs(root,ans,1);
+        return ans;
+    }
+};
+
+
+//EASY SOLUTION TO UNDERSTAND
+//O(N^2) SOLUTION
+
 class Solution {
 public:
     int height(TreeNode* p){
