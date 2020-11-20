@@ -18,3 +18,33 @@ public:
         return true;
     }
 };
+
+
+
+//OPTIMIZED SOLUTION
+
+class Solution {
+public:
+    bool canVisitAllRooms(vector<vector<int>>& rooms) {
+        vector<bool> visited(rooms.size(),false);
+        visited[0]=true;
+        stack<int> s;
+        s.push(0);
+        
+        while(!s.empty()){
+            int n=s.top();
+            s.pop();
+            for(int i:rooms[n]){
+                if(!visited[i]){
+                    visited[i]=true;
+                    s.push(i);
+                }
+            }
+        }
+        for(bool i:visited){
+            if(!i) return false;
+        }
+        return true;
+        
+    }
+};
