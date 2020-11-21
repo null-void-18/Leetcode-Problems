@@ -28,7 +28,8 @@ public:
             }
             return;
         }
-        else {
+        else 
+        {
             board[i][j] = '0' + count;
             return;
         }
