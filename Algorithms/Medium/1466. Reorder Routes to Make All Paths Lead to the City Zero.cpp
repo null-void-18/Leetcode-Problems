@@ -27,6 +27,7 @@ public:
         for(int i=0;i<connections.size();i++){
             pair<int,int> p={connections[i][0],connections[i][1]};
             
+            //if the road is already present then remove it from the set of roads that leads to city 0
             if(s.find(p) != s.end()) s.erase(p);
         }
         return s.size();
