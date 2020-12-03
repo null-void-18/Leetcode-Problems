@@ -8,7 +8,6 @@ public:
                 st.push({'(',i});
             }
             else if(s[i]==')'){
-                cout<<*(s.begin()+i-1);
                 reverse(s.begin()+st.top().second+1,s.begin()+i);
                 s.erase(i,1);
                 s.erase(st.top().second,1);
