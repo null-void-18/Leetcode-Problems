@@ -32,8 +32,7 @@ public:
     
     
     TreeNode* constructMaximumBinaryTree(vector<int>& nums) {
-        int index = 0,max = 0;
-        TreeNode* root;
+        
         
         
         return createtree(nums,0,nums.size()-1);
