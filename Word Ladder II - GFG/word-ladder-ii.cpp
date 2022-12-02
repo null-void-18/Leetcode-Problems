@@ -26,6 +26,7 @@ public:
                 for(auto it:used) {
                     st.erase(it);
                 }
+                used.clear();
             }
             
             string word = vec.back();
