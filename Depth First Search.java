@@ -1,6 +1,33 @@
+//Recursive approach
+class Solution {
+    
+    void dfs(ArrayList<ArrayList<Integer>> adj,ArrayList<Integer> ans,boolean vis[],int start) {
+        if(vis[start]) {
+            return;
+        }
+        vis[start] = true;
+        ans.add(start);
+        for(int i : adj.get(start)) {
+            if(!vis[i]) {
+                dfs(adj,ans,vis,i);
+            }
+        }
+    }
+     
+    public ArrayList<Integer> dfsOfGraph(ArrayList<ArrayList<Integer>> adj) {
+        ArrayList<Integer> ans = new ArrayList<>();
+        
+        boolean vis[] = new boolean[adj.size()];
+        dfs(adj,ans,vis,0);
+        return ans;
+    }
+}
 
-//Depth First Search using stack
 
+
+
+
+//Iterative approach
 class Solution {
     // Function to return a list containing the DFS traversal of the graph.
     public ArrayList<Integer> dfsOfGraph(ArrayList<ArrayList<Integer>> adj) {
