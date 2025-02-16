@@ -1,4 +1,36 @@
+//DFS approach
 
+
+class Solution {
+    static boolean dfs(ArrayList<ArrayList<Integer>> adj, boolean[] vis, int start, int parent) {
+        vis[start] = true;
+
+        for (int i : adj.get(start)) {
+            if (!vis[i]) {
+                if (dfs(adj, vis, i, start)) {
+                    return true; 
+                }
+            } else if (i != parent) {
+                return true; 
+            }
+        }
+        return false;
+    }
+
+    public boolean isCycle(ArrayList<ArrayList<Integer>> adj) {
+        int V = adj.size();
+        boolean vis[] = new boolean[V];
+
+        for (int i = 0; i < V; i++) {
+            if (!vis[i]) {
+                if (dfs(adj, vis, i, -1)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+}
 
 //BFS Approach
 
