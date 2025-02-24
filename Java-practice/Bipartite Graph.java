@@ -1,4 +1,35 @@
 
+//DFS Approach
+
+class Solution {
+    
+    void dfs(ArrayList<ArrayList<Integer>> adj,int color[],int start,int prevColor,boolean[] flag) {
+        for(int i : adj.get(start)) {
+            if(color[i] == -1) {
+                color[i] = 1 - prevColor;
+                dfs(adj,color,i,1-prevColor,flag);
+            }else if(color[i] == prevColor) {
+                flag[0] = false;
+            }
+        }
+    }
+    
+    
+    public boolean isBipartite(ArrayList<ArrayList<Integer>> adj) {
+        int n = adj.size();
+        int color[] = new int[n];
+        boolean[] flag = {true};
+        Arrays.fill(color, -1);
+        for(int i = 0; i < n;i++) {
+            if(color[i] == -1) {
+                color[i] = 0;
+                dfs(adj,color,i,0,flag);
+            }
+        }
+        return flag[0];
+    }
+}
+
 
 //BFS Approach
 
