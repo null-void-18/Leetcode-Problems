@@ -1,4 +1,49 @@
 
+//Topo sort, reverse graph + Kahn's also
+
+
+class Solution {
+    public List<Integer> eventualSafeNodes(int V, List<List<Integer>> adj) {
+        List<Integer> ans = new ArrayList<>();
+        List<List<Integer>> newAdj = new ArrayList<>();
+
+        for (int i = 0; i < V; i++) {
+            newAdj.add(new ArrayList<>());
+        }
+
+        int[] indegree = new int[V]; 
+        for (int i = 0; i < V; i++) {
+            for (int node : adj.get(i)) {
+                newAdj.get(node).add(i);
+                indegree[i]++;  
+            }
+        }
+
+        Queue<Integer> q = new LinkedList<>();
+        for (int i = 0; i < V; i++) {
+            if (indegree[i] == 0) {
+                q.add(i);
+            }
+        }
+
+        while (!q.isEmpty()) {
+            int node = q.poll();
+            ans.add(node);
+            for (int neighbor : newAdj.get(node)) {
+                indegree[neighbor]--;
+                if (indegree[neighbor] == 0) {
+                    q.add(neighbor);
+                }
+            }
+        }
+
+        Collections.sort(ans);
+        return ans;
+    }
+}
+
+
+
 //DFS Approach
 
 class Solution {
