@@ -1,4 +1,34 @@
 
+//Dp Aproach
+
+class Solution {
+public int minimumTotal(List<List<Integer>> triangle) {
+    if (triangle == null || triangle.size() == 0) return 0;
+
+    int m = triangle.size();
+    int[][] dp = new int[m][m];
+
+    dp[0][0] = triangle.get(0).get(0);
+
+    for (int i = 1; i < m; i++) {
+        for (int j = 0; j < triangle.get(i).size(); j++) {
+            int fromAbove = j < triangle.get(i - 1).size() ? dp[i - 1][j] : Integer.MAX_VALUE;
+            int fromLeft = j > 0 ? dp[i - 1][j - 1] : Integer.MAX_VALUE;
+            dp[i][j] = triangle.get(i).get(j) + Math.min(fromAbove, fromLeft);
+        }
+    }
+
+    int minTotal = Integer.MAX_VALUE;
+    for (int val : dp[m - 1]) {
+        minTotal = Math.min(minTotal, val);
+    }
+
+    return minTotal;
+}
+}
+
+
+
 //Recursion with Memoization
 
 class Solution {
