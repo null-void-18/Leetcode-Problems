@@ -1,5 +1,45 @@
 
 
+//DP + space optimized
+
+
+class Solution {
+    
+    
+    static int knapsack(int W, int val[], int wt[]) {
+        int n = val.length;
+        int prev[] = new int[W+1];
+        int curr[] = new int[W+1];
+        
+        for(int i = 0; i <= W;i++) {
+            if(wt[0] <= i) {
+                prev[i] = val[0];
+            }
+            else {
+                prev[i] = 0;
+            }
+        }
+        
+        
+        for(int i = 1;i < n;i++) {
+            for(int j = 1;j <= W;j++) {
+                int take = 0;
+                int notTake = prev[j];
+                if(j >= wt[i]) {
+                    take = prev[j-wt[i]] + val[i];
+                }
+                curr[j] = Math.max(take,notTake);
+            }
+            prev = curr.clone();
+        }
+        
+        return prev[W];
+    }
+}
+
+
+
+
 
 //Dp Approach
 
