@@ -1,4 +1,39 @@
 
+//Better solution
+
+class Solution {
+
+    int profit(int dp[][],int prices[],int index,int buy) {
+        if(index >= prices.length) {
+            return 0;
+        }
+
+        if(dp[index][buy] != -1) return dp[index][buy];
+
+        if(buy == 1) {
+            return dp[index][buy] = Math.max(-prices[index] + profit(dp,prices,index+1,0),profit(dp,prices,index+1,1));
+        }
+        else{
+            return dp[index][buy] = Math.max(prices[index] + profit(dp,prices,index+2,1),profit(dp,prices,index+1,0));
+        }
+    }
+
+
+    public int maxProfit(int[] prices) {
+        int dp[][] = new int[prices.length][2];
+
+        for(int rows[] : dp) {
+            Arrays.fill(rows,-1);
+        }
+
+        return profit(dp,prices,0,1);
+    }
+}
+
+
+
+
+
 //DP Approach with Space Optimization
 
 class Solution {
