@@ -1,4 +1,4 @@
-//Another brilliant solution -- More like insersion sort
+//Another brilliant solution -- More like insertion sort
 
 class Solution {
     public int lengthOfLIS(int[] nums) {
