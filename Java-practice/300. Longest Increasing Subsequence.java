@@ -1,4 +1,32 @@
 
+//Space optimized DP Approach 
+
+class Solution {
+        public int lengthOfLIS(int[] nums) {
+        int n = nums.length;
+        int after[] = new int[n+1],curr[] = new int[n+1];
+
+        for(int index = n-1; index >= 0; index--) {
+            for(int prevIndex = index-1; prevIndex >= -1; prevIndex--) {
+                int exclude = after[prevIndex+1]; 
+                int include = 0;
+                if(prevIndex == -1 || nums[prevIndex] < nums[index]) {
+                    include = 1 + after[index+1];
+                }
+                curr[prevIndex+1] = Math.max(include, exclude);
+            }
+            for (int i = 0; i < curr.length; i++) {
+                after[i] = curr[i];
+            }
+        }
+
+        return after[0];
+    }
+}
+
+
+
+//DP Approach
 
 class Solution {
     public int lengthOfLIS(int[] nums) {
