@@ -1,3 +1,42 @@
+//My version of optimal solution
+
+public class Solution {
+
+    int binarySearch(List<Integer> lis,int number) {
+        int left = 0;
+        int right = lis.size()-1;
+        while (left < right) {
+            int mid = (left + right) / 2;
+            if (lis.get(mid) < number) {
+                left = mid + 1;
+            } else {
+                right = mid;
+            }
+        }
+        return left;
+    }
+
+
+    public int lengthOfLIS(int[] nums) {
+        List<Integer> lis = new ArrayList<>();
+        lis.add(nums[0]);
+
+        for(int i = 1;i < nums.length;i++) {
+            if(nums[i] > lis.get(lis.size()-1)) {
+                lis.add(nums[i]);
+            } else {
+                int index = binarySearch(lis,nums[i]);
+                lis.set(index,nums[i]);
+            }
+        }
+        return lis.size();
+    }
+}
+
+
+
+
+
 //Most optimal Solution -- Binary Search
 
 public class Solution {
