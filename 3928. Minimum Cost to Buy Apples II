@@ -1,0 +1,120 @@
+class Solution {
+
+
+    public int[] minCost(int n, int[] prices, int[][] roads) {
+        List<Edge>[] empty = new ArrayList[n];
+        List<Edge>[] carry = new ArrayList[n];
+
+        for(int i = 0;i < n;i++) {
+            empty[i] = new ArrayList<>();
+            carry[i] = new ArrayList<>();
+        }
+
+        for(int road[] : roads) {
+            int u = road[0];
+            int v = road[1];
+            int cost = road[2];
+            int tax = road[3];
+
+            empty[u].add(new Edge(v,cost));
+            carry[u].add(new Edge(v,1L * cost * tax));
+
+            empty[v].add(new Edge(u,cost));
+            carry[v].add(new Edge(u,1L * cost * tax));
+        }
+
+
+        int ans[] = new int[n];
+
+        long dist[] = new long[n];
+        long carryDist[] = new long[n];
+
+
+        for(int i = 0;i < n;i++) {
+
+            Arrays.fill(dist,Long.MAX_VALUE);
+            Arrays.fill(carryDist,Long.MAX_VALUE);
+
+            PriorityQueue<Pair> pq = new PriorityQueue<>((a,b) -> Long.compare(a.dist,b.dist));
+
+            dist[i] = 0;
+
+            pq.offer(new Pair(0,i));
+
+            while(pq.size() > 0) {
+                Pair pair = pq.poll();
+
+                int node = pair.node;
+                long d = pair.dist;
+
+                if(dist[node] < d) continue;
+
+                for(Edge edge : empty[node]) {
+                    if(dist[edge.toNode] > d + edge.weight) {
+                        pq.offer(new Pair(d + edge.weight,edge.toNode));
+                        dist[edge.toNode] = d + edge.weight;
+                    }
+                }
+            }
+
+            carryDist[i] = 0;
+
+            pq.offer(new Pair(0,i));
+
+            while(pq.size() > 0) {
+                Pair pair = pq.poll();
+
+                int node = pair.node;
+                long d = pair.dist;
+
+                if(carryDist[node] < d) continue;
+
+                for(Edge edge : carry[node]) {
+                    if(carryDist[edge.toNode] > d + edge.weight) {
+                        pq.offer(new Pair(d + edge.weight,edge.toNode));
+                        carryDist[edge.toNode] = d + edge.weight;
+                    }
+                }
+            }
+
+            long answer = prices[i];
+
+            for(int k = 0;k < n;k++) {
+                if(dist[k] == Long.MAX_VALUE ||
+                   carryDist[k] == Long.MAX_VALUE)
+                    continue;
+
+                answer = Math.min(answer, 
+                            dist[k] + carryDist[k] + prices[k]);
+                
+            }
+
+            ans[i] = (int)answer;
+        }
+
+        return ans;
+    }
+
+
+
+    static class Pair {
+        long dist;
+        int node;
+
+        Pair(long dist, int node) {
+            this.dist = dist;
+            this.node = node;
+        }
+    }
+
+
+    static class Edge {
+        int toNode;
+        long weight;
+
+        Edge(int node, long weight) {
+            toNode = node;
+            this.weight = weight;
+        }
+    }
+}
